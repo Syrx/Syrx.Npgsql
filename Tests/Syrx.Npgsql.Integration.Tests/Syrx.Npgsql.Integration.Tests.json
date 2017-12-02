@@ -693,7 +693,7 @@
             },
             "SupportsCancellationToken": {
               "ConnectionAlias": "Syrx.Sql",
-              "CommandText": "waitfor delay '00:00:05';",
+              "CommandText": "SELECT pg_sleep(5);",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5
@@ -733,7 +733,7 @@
             },
             "ExceptionsAreReturnedToCaller": {
               "ConnectionAlias": "Syrx.Sql",
-              "CommandText": "declare @result table(Value int) insert into @result(Value)select @value + (1/0);",
+              "CommandText": "select 1/0;",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5
@@ -775,7 +775,7 @@
           "Commands": {
             "SupportParameterlessCalls": {
               "ConnectionAlias": "Syrx.Sql",
-              "CommandText": "declare @result table(Value int) insert into @result(Value)select 1;",
+              "CommandText": "create temp table t_result (Value int); insert into t_result(Value)select 1;",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5
@@ -789,14 +789,14 @@
             },
             "SupportsRollbackOnParameterlessCalls.Count": {
               "ConnectionAlias": "Syrx.Sql",
-              "CommandText": "select count(1)[Result] from Poco",
+              "CommandText": "select count(1) from Poco;",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5
             },
             "ExceptionsAreReturnedToCaller": {
               "ConnectionAlias": "Syrx.Sql",
-              "CommandText": "declare @result table(Value int) insert into @result(Value)select @value + (1/0);",
+              "CommandText": "select 1/0;",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5
@@ -817,16 +817,14 @@
             },
             "SupportsSuppressedDistributedTransactions": {
               "ConnectionAlias": "Syrx.Sql",
-              "CommandText":
-                "insert into [DistributedTransaction](Name, Value,Modified)select @Name, @Value, @Modified;",
+              "CommandText": "insert into DistributedTransaction(Name, Value,Modified)select @Name, @Value, @Modified;",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5
             },
             "SupportsEnlistingInAmbientTransactions": {
               "ConnectionAlias": "Syrx.Sql",
-              "CommandText":
-                "insert into [DistributedTransaction](Name, Value,Modified)select @Name, @Value, @Modified;",
+              "CommandText": "insert into DistributedTransaction (Name, Value,Modified)select @Name, @Value, @Modified;",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5
@@ -857,7 +855,7 @@
             },
             "TableExists": {
               "ConnectionAlias": "Syrx.Sql",
-              "CommandText": "select exists(select * from information_schema.tables where table_name = @name);",
+              "CommandText": "select exists(select * from information_schema.tables where table_name = lower(@name));",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5
@@ -983,8 +981,7 @@
   "Connections": [
     {
       "Alias": "Syrx.Sql",
-      "ProviderName": "System.Data.SqlClient",
-      "ConnectionString": "insert valid connection string here"
+      "ConnectionString": ""
     }
   ]
 }

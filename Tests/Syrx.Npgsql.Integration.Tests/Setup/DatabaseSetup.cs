@@ -35,37 +35,7 @@ namespace Syrx.Npgsql.Integration.Tests.Setup
                 Console.WriteLine("Poco table doesn't exist. Attempting to create.");
                 CreatePocoTable();
             }
-
-            /*if (!TableExists("BulkInsert"))
-            {
-                Console.WriteLine("BulkInsert table doesn't exist. Attempting to create.");
-                CreateBulkInsertTable();
-            }
-
-            if (!TableCreatorExists())
-            {
-                Console.WriteLine("Table creator procedure doesn't exist. Attempting to create.");
-                CreateTableCreatorProcedure();
-            }
-
-            if (!IdentityTesterExists())
-            {
-                Console.WriteLine("Identity tester procedure doesn't exist. Attempting to create.");
-                CreateIdentityTesterProcedure();
-            }
-
-            if (!BulkInsertProcedureExists())
-            {
-                Console.WriteLine("Bulk insert tester procedure doesn't exist. Attempting to create.");
-                CreateBulkInsertProcedure();
-            }
-
-            if (!BulkInsertAndReturnProcedureExists())
-            {
-                Console.WriteLine("Bulk insert and return tester procedure doesn't exist. Attempting to create.");
-                CreateBulkInsertAndReturnProcedure();
-            }*/
-
+            
             if (IsStale())
             {
                 Console.WriteLine("Data in the Poco table is stale. Attempting to refresh.");
@@ -95,50 +65,26 @@ namespace Syrx.Npgsql.Integration.Tests.Setup
             _commander.Query<string>(new {name});
             Console.WriteLine($"{name} created!");
         }
-
-        private void DropDatabase(string name = "Syrx")
-        {
-            _commander.Execute(new {name});
-            Console.WriteLine($"{name} dropped!");
-        }
-
+        
         private bool DatabaseExists(string name = "Syrx")
         {
             return _commander.Query<bool>(new {name}).SingleOrDefault();
         }
-
-        private void DropAllTables(string name)
-        {
-            _commander.Execute(new {name});
-        }
-
+        
         #endregion
 
         #region / tables / 
 
         private void CreateDistributedTransactionTable()
-        {
-            //const string tableName = "DistributedTransaction";
-            //Console.WriteLine("Creating DistributedTransactionTable");
-            //CreateTable(tableName);
+        {            
             _commander.Execute<bool>();
         }
-
-        private void CreateTable(string tableName)
-        {
-            _commander.Execute(new {tableName});
-        }
-
+        
         private void CreatePocoTable()
         {
             _commander.Execute<bool>();
         }
-
-        private void CreateBulkInsertTable()
-        {
-            _commander.Execute<bool>();
-        }
-
+        
         private bool TableExists(string name)
         {
             return _commander.Query<bool>(new {name}).SingleOrDefault();
@@ -187,50 +133,6 @@ namespace Syrx.Npgsql.Integration.Tests.Setup
             }
         }
 
-        #endregion
-
-        #region / procedures / 
-
-        private bool TableCreatorExists()
-        {
-            return _commander.Query<bool>().SingleOrDefault();
-        }
-
-        private void CreateTableCreatorProcedure()
-        {
-            _commander.Execute<bool>();
-        }
-
-        private bool IdentityTesterExists()
-        {
-            return _commander.Query<bool>().SingleOrDefault();
-        }
-
-        private void CreateIdentityTesterProcedure()
-        {
-            _commander.Execute<bool>();
-        }
-
-        private bool BulkInsertProcedureExists()
-        {
-            return _commander.Query<bool>().SingleOrDefault();
-        }
-
-        private bool BulkInsertAndReturnProcedureExists()
-        {
-            return _commander.Query<bool>().SingleOrDefault();
-        }
-
-        private void CreateBulkInsertProcedure()
-        {
-            _commander.Execute<bool>();
-        }
-
-        private void CreateBulkInsertAndReturnProcedure()
-        {
-            _commander.Execute<bool>();
-        }
-
-        #endregion
+        #endregion        
     }
 }

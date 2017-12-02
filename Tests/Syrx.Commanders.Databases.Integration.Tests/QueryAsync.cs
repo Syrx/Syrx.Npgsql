@@ -30,7 +30,7 @@ namespace Syrx.Commanders.Databases.Integration.Tests
         public async Task ExceptionsAreReturnedToCaller()
         {
             var result = await ThrowsAnyAsync<Exception>(() => _commander.QueryAsync<int>());
-            var expected = "Divide by zero error encountered.";
+            const string expected = "22012: division by zero";
             Equal(expected, result.Message);
         }
 
@@ -48,7 +48,7 @@ namespace Syrx.Commanders.Databases.Integration.Tests
             var result = await _commander.QueryAsync<PocoA>(new {Id = 3});
             NotNull(result);
             True(result.Any());
-            Equal(1, result.Count());
+            Single(result);
 
             // check values 
             var first = result.First();
@@ -65,11 +65,11 @@ namespace Syrx.Commanders.Databases.Integration.Tests
             var task = _commander.QueryAsync<int>(cancellationToken: tokenSource.Token);
             var exception = Throws<AggregateException>(() => task.Wait(TimeSpan.FromSeconds(5)));
             var innerExceptions = exception.InnerExceptions;
-            Equal(1, innerExceptions.Count);
+            Single(innerExceptions);
             IsAssignableFrom<Exception>(innerExceptions.Single());
             const string expected =
-                "A severe error occurred on the current command.  The results, if any, should be discarded.\r\nOperation cancelled by user.";
-            //Equal(expected, innerExceptions.Single().Message);
+                "57014: canceling statement due to user request";
+            Equal(expected, innerExceptions.Single().Message);
         }
     }
 }

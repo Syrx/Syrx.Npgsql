@@ -5,20 +5,18 @@
 //  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
 //  =============================================================================================================================
 
+using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using Syrx.Settings.Databases;
 using Xunit;
 using static Xunit.Assert;
 
 namespace Syrx.Connectors.Databases.Npgsql.Unit.Tests.NpgsqlDatabaseConnectorTests
 {
-    public class CreateConnection
+    public class Constructor
     {
         private readonly IDatabaseCommanderSettings _settings;
-        private readonly IDatabaseConnector _connector;
-        public CreateConnection()
+        public Constructor()
         {
             _settings = new DatabaseCommanderSettings(
                 new List<DatabaseCommandNamespaceSetting>
@@ -38,18 +36,22 @@ namespace Syrx.Connectors.Databases.Npgsql.Unit.Tests.NpgsqlDatabaseConnectorTes
                 }
                 , new List<ConnectionStringSetting>
                 {
-                    new ConnectionStringSetting("test.alias", "System.Data.SqlClient", "")
+                    new ConnectionStringSetting("test.alias", "connectionString")
                 });
+        }        
 
-            _connector = new NpgsqlDatabaseConnector(_settings);
+        [Fact]
+        public void NullSettingsThrowsArgumentNullException()
+        {
+            var result = Throws<ArgumentNullException>(() => new NpgsqlDatabaseConnector(null));
+            Equal("Value cannot be null.\r\nParameter name: settings", result.Message);
         }
 
-        //[Fact]
+        [Fact]
         public void Successfully()
         {
-            var setting = _settings.Namespaces.First().Types.First().Commands.First().Value;
-            var result = _connector.CreateConnection(setting);
-            Equal(ConnectionState.Closed, result.State);
+            var result = new NpgsqlDatabaseConnector(_settings);
+            NotNull(result);
         }
     }
 }

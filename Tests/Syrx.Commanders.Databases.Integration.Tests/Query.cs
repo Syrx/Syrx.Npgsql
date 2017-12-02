@@ -28,7 +28,7 @@ namespace Syrx.Commanders.Databases.Integration.Tests
         public void ExceptionsAreReturnedToCaller()
         {
             var result = ThrowsAny<Exception>(() => _commander.Query<int>());
-            const string expected = "Divide by zero error encountered.";
+            const string expected = "22012: division by zero";
             Equal(expected, result.Message);
         }
 
@@ -46,7 +46,7 @@ namespace Syrx.Commanders.Databases.Integration.Tests
             var result = _commander.Query<PocoA>(new {Id = 3}).ToList();
             NotNull(result);
             True(result.Any());
-            Equal(1, result.Count());
+            Single(result);
 
             // check values 
             var first = result.First();

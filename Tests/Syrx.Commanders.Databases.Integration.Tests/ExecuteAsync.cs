@@ -58,7 +58,7 @@ namespace Syrx.Commanders.Databases.Integration.Tests
         public async Task ExceptionsAreReturnedToCaller()
         {
             var result = await ThrowsAnyAsync<Exception>(() => _commander.ExecuteAsync(new {value = 1}));
-            const string expected = "Divide by zero error encountered.\r\nThe statement has been terminated.";
+            const string expected = "22012: division by zero";
             Equal(expected, result.Message);
         }
 
@@ -81,7 +81,7 @@ namespace Syrx.Commanders.Databases.Integration.Tests
             var result = await ThrowsAnyAsync<Exception>(() => _commander.ExecuteAsync<bool>());
             var postCount = await _commander.QueryAsync<int>(method: "SupportsRollbackOnParameterlessCalls.Count");
 
-            Equal("Divide by zero error encountered.", result.Message);
+            Equal("22012: division by zero", result.Message);
             Equal(preCount, postCount);
         }
 
@@ -116,9 +116,8 @@ namespace Syrx.Commanders.Databases.Integration.Tests
             var model = new PocoA {Name = Guid.NewGuid().ToString(), Value = int.MaxValue};
 
             var result = await ThrowsAnyAsync<Exception>(() => _commander.ExecuteAsync(model));
-            const string expected =
-                "Arithmetic overflow error converting expression to data type float.\r\nThe statement has been terminated.";
-            //Equal(expected, result.Message);
+            const string expected = "22003: value overflows numeric format";
+            Equal(expected, result.Message);
 
             // check if the record has been rolled back.
             // ReSharper disable once ExplicitCallerInfoArgument
