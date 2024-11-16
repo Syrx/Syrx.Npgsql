@@ -1,5 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
 		<Version>2.1.0</Version>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>Syrx</Authors>
@@ -8,10 +11,10 @@
 		<PackageProjectUrl>https://github.com/Syrx/</PackageProjectUrl>
 		<PackageIconUrl></PackageIconUrl>
 		<RepositoryUrl>https://github.com/Syrx/</RepositoryUrl>
-		<Description>This package provides Syrx support for PostgreSQL databases.</Description>
+		<Description>This package provides support for PostgreSQL connections by implementing a NpgsqlDatabaseConnector for the Syrx IDatabaseConnector. </Description>
 		<PackageReleaseNotes>
+			BREAKING CHANGE: Changed namespace.
 			Updated to .NET8.0.
-			Try using the new Syrx.Npgsql.Extensions to simplify wiring up and configuration!
 		</PackageReleaseNotes>
 		<PackageTags>syrx;data access;dapper;orm;micro-orm;postgresql;npgsql</PackageTags>
 	</PropertyGroup>
@@ -25,21 +28,16 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Syrx.Commanders.Databases" Version="2.1.0" />
 	</ItemGroup>
 
 	<PropertyGroup>
 		<EnablePackageValidation>true</EnablePackageValidation>
 	</PropertyGroup>
 
-	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-	</PropertyGroup>
-
 	<ItemGroup>
-		<ProjectReference Include="..\Syrx.Commanders.Databases.Connectors.Npgsql\Syrx.Commanders.Databases.Connectors.Npgsql.csproj" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="Npgsql" Version="8.0.5" />
+		<PackageReference Include="Syrx.Commanders.Databases.Connectors" Version="2.1.0" />
 	</ItemGroup>
 
 </Project>
