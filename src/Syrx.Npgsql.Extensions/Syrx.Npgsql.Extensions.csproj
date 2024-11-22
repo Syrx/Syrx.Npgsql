@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<Description>This package hosts extension methods to make wiring up support for PostgreSQL databases simpler and easier. </Description>
+		<PackageTags>syrx;data access;dapper;orm;micro-orm;postgresql;npgsql</PackageTags>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Syrx.Commanders.Databases.Connectors.Npgsql.Extensions\Syrx.Commanders.Databases.Connectors.Npgsql.Extensions.csproj" />
+		<ProjectReference Include="..\Syrx.Npgsql\Syrx.Npgsql.csproj" />
+	</ItemGroup>
+
+</Project>
