@@ -25,10 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\.submodules\Syrx.Commanders.Databases\tests\integration\Syrx.Commanders.Databases.Tests.Integration.Models\Syrx.Commanders.Databases.Tests.Integration.Models.csproj" />
+    <ProjectReference Include="..\..\..\.submodules\Syrx.Commanders.Databases\tests\integration\Syrx.Commanders.Databases.Tests.Integration\Syrx.Commanders.Databases.Tests.Integration.csproj" />
     <ProjectReference Include="..\..\..\src\Syrx.Npgsql.Extensions\Syrx.Npgsql.Extensions.csproj" />
     <ProjectReference Include="..\..\..\src\Syrx.Npgsql\Syrx.Npgsql.csproj" />
-    <ProjectReference Include="..\..\unit\Syrx.Tests.Extensions\Syrx.Tests.Extensions.csproj" />
-    <ProjectReference Include="..\Syrx.Commanders.Databases.Tests.Integration.Models\Syrx.Commanders.Databases.Tests.Integration.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
