@@ -1,12 +1,10 @@
+global using DotNet.Testcontainers.Builders;
 global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
 global using Syrx.Commanders.Databases.Connectors.Npgsql.Extensions;
 global using Syrx.Commanders.Databases.Settings.Extensions;
-global using Syrx.Commanders.Databases.Tests.Integration.Models;
-global using Syrx.Commanders.Databases.Tests.Integration.Models.Immutable;
+global using Syrx.Commanders.Databases.Tests.Integration;
+global using Syrx.Commanders.Databases.Tests.Integration.DatabaseCommanderTests;
 global using Syrx.Extensions;
-global using Syrx.Npgsql.Tests.Integration.DatabaseCommanderTests;
-global using Syrx.Tests.Extensions;
-global using System.Transactions;
 global using Testcontainers.PostgreSql;
 global using static Syrx.Validation.Contract;
-global using static Xunit.Assert;
