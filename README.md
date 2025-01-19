@@ -14,9 +14,7 @@ This project provides Syrx support for Postgres. The overall experience of using
 |Package Reference|```<PackageReference Include="Syrx.Npgsql.Extensions" Version="2.4.0" />```|
 |Paket CLI|```paket add Syrx.Npgsql.Extensions --version 2.4.0```|
 
-However, if you don't need the configuration options, you can install the standalone Oracle package. 
-
-Standalone installation of the package is via [nuget](https://www.nuget.org/packages/Syrx.Npgsql/). However we recommend installing the extensions package. 
+However, if you don't need the configuration options, you can install the standalone package via [nuget](https://www.nuget.org/packages/Syrx.Npgsql/). 
 
 |Source|Command|
 |--|--|
