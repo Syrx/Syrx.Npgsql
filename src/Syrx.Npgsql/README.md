@@ -2,6 +2,42 @@
 
 PostgreSQL data access provider for the Syrx framework.
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+  - [1. Configure Services](#1-configure-services)
+  - [2. Create Repository](#2-create-repository)
+  - [3. Configure Commands](#3-configure-commands)
+- [PostgreSQL-Specific Features](#postgresql-specific-features)
+  - [JSON Support](#json-support)
+  - [Array Support](#array-support)
+  - [Advanced PostgreSQL Types](#advanced-postgresql-types)
+- [Configuration Patterns](#configuration-patterns)
+  - [Basic Configuration](#basic-configuration)
+  - [Multiple Databases](#multiple-databases)
+  - [Connection Pool Optimization](#connection-pool-optimization)
+  - [SSL Configuration](#ssl-configuration)
+- [Advanced Usage](#advanced-usage)
+  - [Bulk Operations](#bulk-operations)
+  - [Complex Queries with CTEs](#complex-queries-with-ctes)
+  - [Window Functions](#window-functions)
+- [Error Handling](#error-handling)
+- [Performance Tips](#performance-tips)
+  - [Connection Management](#connection-management)
+  - [Query Optimization](#query-optimization)
+  - [Data Types](#data-types)
+- [Testing](#testing)
+- [Migration from Other Providers](#migration-from-other-providers)
+  - [From Entity Framework](#from-entity-framework)
+  - [From Raw ADO.NET](#from-raw-adonet)
+- [Related Packages](#related-packages)
+- [Requirements](#requirements)
+- [License](#license)
+- [Credits](#credits)
+
 ## Overview
 
 `Syrx.Npgsql` provides PostgreSQL database connectivity for the Syrx data access framework. Built on top of Npgsql (the .NET PostgreSQL provider), this package offers seamless integration with PostgreSQL databases while maintaining Syrx's core principles of control, performance, and flexibility.

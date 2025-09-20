@@ -2,6 +2,24 @@
 
 Core PostgreSQL database connector for the Syrx framework.
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Installation](#installation)
+- [Architecture](#architecture)
+- [Key Components](#key-components)
+- [Connection Management](#connection-management)
+- [Configuration](#configuration)
+- [PostgreSQL-Specific Features](#postgresql-specific-features)
+- [Error Handling](#error-handling)
+- [Performance Considerations](#performance-considerations)
+- [Testing](#testing)
+- [Related Packages](#related-packages)
+- [Requirements](#requirements)
+- [License](#license)
+- [Credits](#credits)
+
 ## Overview
 
 `Syrx.Commanders.Databases.Connectors.Npgsql` provides the foundational PostgreSQL database connectivity layer for the Syrx framework. This package implements the `IDatabaseConnector` interface specifically for PostgreSQL databases using Npgsql as the underlying provider.
@@ -117,38 +135,6 @@ Supports all Npgsql connection string parameters:
 ```
 
 ## Usage Examples
-
-### Direct Usage (Advanced)
-
-```csharp
-using Syrx.Commanders.Databases.Connectors.Npgsql;
-
-public class DirectUsageExample
-{
-    private readonly NpgsqlDatabaseConnector _connector;
-
-    public DirectUsageExample()
-    {
-        _connector = new NpgsqlDatabaseConnector();
-    }
-
-    public async Task<IEnumerable<User>> GetUsersAsync(string connectionString)
-    {
-        var commandSetting = new CommandSetting
-        {
-            ConnectionAlias = "default",
-            CommandText = "SELECT id, name, email FROM users WHERE is_active = @isActive"
-        };
-
-        var parameters = new { isActive = true };
-
-        return await _connector.QueryAsync<User>(
-            connectionString, 
-            commandSetting, 
-            parameters);
-    }
-}
-```
 
 ### Through Dependency Injection
 

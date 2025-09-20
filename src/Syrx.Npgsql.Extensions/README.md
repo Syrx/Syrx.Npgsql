@@ -2,6 +2,27 @@
 
 Dependency injection extensions for Syrx PostgreSQL integration.
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Configuration Examples](#configuration-examples)
+- [Advanced Configuration](#advanced-configuration)
+- [PostgreSQL-Specific Features](#postgresql-specific-features)
+- [Service Lifetimes](#service-lifetimes)
+- [Multiple Database Support](#multiple-database-support)
+- [Environment-Specific Settings](#environment-specific-settings)
+- [Performance Optimization](#performance-optimization)
+- [Error Handling](#error-handling)
+- [Testing Integration](#testing-integration)
+- [Migration Scenarios](#migration-scenarios)
+- [Related Packages](#related-packages)
+- [Requirements](#requirements)
+- [License](#license)
+- [Credits](#credits)
+
 ## Overview
 
 `Syrx.Npgsql.Extensions` provides seamless dependency injection integration for PostgreSQL data access in the Syrx framework. This package simplifies the registration and configuration of PostgreSQL-specific services in .NET applications using Microsoft's dependency injection container.

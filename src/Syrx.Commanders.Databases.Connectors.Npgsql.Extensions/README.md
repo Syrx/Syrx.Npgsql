@@ -2,6 +2,26 @@
 
 Dependency injection extensions for Syrx PostgreSQL database connectors.
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Installation](#installation)
+- [Key Extensions](#key-extensions)
+- [Usage](#usage)
+- [Service Registration Details](#service-registration-details)
+- [Service Lifetimes](#service-lifetimes)
+- [Configuration Examples](#configuration-examples)
+- [PostgreSQL-Specific Configuration](#postgresql-specific-configuration)
+- [Integration with Other Extensions](#integration-with-other-extensions)
+- [Error Handling](#error-handling)
+- [Performance Optimization](#performance-optimization)
+- [Testing Support](#testing-support)
+- [Related Packages](#related-packages)
+- [Requirements](#requirements)
+- [License](#license)
+- [Credits](#credits)
+
 ## Overview
 
 `Syrx.Commanders.Databases.Connectors.Npgsql.Extensions` provides dependency injection and service registration extensions specifically for PostgreSQL database connectors in the Syrx framework. This package enables easy registration of PostgreSQL connectors with DI containers.
