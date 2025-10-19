@@ -67,7 +67,7 @@ Install-Package Syrx.Npgsql
 
 **PackageReference**
 ```xml
-<PackageReference Include="Syrx.Npgsql" Version="2.4.5" />
+<PackageReference Include="Syrx.Npgsql" Version="3.0.0" />
 ```
 
 ## Quick Start

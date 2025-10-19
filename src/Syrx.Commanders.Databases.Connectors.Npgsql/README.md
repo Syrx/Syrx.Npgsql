@@ -49,7 +49,7 @@ Install-Package Syrx.Commanders.Databases.Connectors.Npgsql
 
 **PackageReference**
 ```xml
-<PackageReference Include="Syrx.Commanders.Databases.Connectors.Npgsql" Version="2.4.5" />
+<PackageReference Include="Syrx.Commanders.Databases.Connectors.Npgsql" Version="3.0.0" />
 ```
 
 ## Core Components

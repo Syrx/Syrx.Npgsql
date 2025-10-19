@@ -49,7 +49,7 @@ Install-Package Syrx.Commanders.Databases.Connectors.Npgsql.Extensions
 
 **PackageReference**
 ```xml
-<PackageReference Include="Syrx.Commanders.Databases.Connectors.Npgsql.Extensions" Version="2.4.5" />
+<PackageReference Include="Syrx.Commanders.Databases.Connectors.Npgsql.Extensions" Version="3.0.0" />
 ```
 
 ## Key Extensions

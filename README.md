@@ -17,19 +17,17 @@ This project provides Syrx support for Postgres. The overall experience of using
 |--|--|
 |.NET CLI|```dotnet add package Syrx.Npgsql.Extensions```
 |Package Manager|```Install-Package Syrx.Npgsql.Extensions```
-|Package Reference|```<PackageReference Include="Syrx.Npgsql.Extensions" Version="2.4.0" />```|
-|Paket CLI|```paket add Syrx.Npgsql.Extensions --version 2.4.0```|
+|Package Reference|```<PackageReference Include="Syrx.Npgsql.Extensions" Version="3.0.0" />```|
+|Paket CLI|```paket add Syrx.Npgsql.Extensions --version 3.0.0```|
 
-However, if you don't need the configuration options, you can install the standalone package via [nuget](https://www.nuget.org/packages/Syrx.Npgsql/). 
+However, if you don't need the configuration options, you can install the standalone package via [nuget](https://www.nuget.org/packages/Syrx.Npgsql/).  
 
 |Source|Command|
 |--|--|
 |.NET CLI|```dotnet add package Syrx.Npgsql```
 |Package Manager|```Install-Package Syrx.Npgsql```
-|Package Reference|```<PackageReference Include="Syrx.Npgsql" Version="2.4.0" />```|
-|Paket CLI|```paket add Syrx.Npgsql --version 2.4.0```|
-
-
+|Package Reference|```<PackageReference Include="Syrx.Npgsql" Version="3.0.0" />```|
+|Paket CLI|```paket add Syrx.Npgsql --version 3.0.0```|
 ## Extensions
 The `Syrx.Npgsql.Extensions` package provides dependency injection support via extension methods. 
 
