@@ -2,7 +2,12 @@
 	<PropertyGroup>
 		<Description>This package provides Syrx support for PostgreSQL databases.</Description>
 		<PackageTags>syrx;data access;dapper;orm;micro-orm;postgresql;npgsql</PackageTags>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="readme.md" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\.submodules\Syrx.Commanders.Databases\src\Syrx.Commanders.Databases\Syrx.Commanders.Databases.csproj" />
