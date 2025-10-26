@@ -1,0 +1,32 @@
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: syrx-postgres-tests
+    environment:
+      POSTGRES_DB: syrx
+      POSTGRES_USER: syrx_user
+      POSTGRES_PASSWORD: YourStrong!Passw0rd
+      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U syrx_user -d syrx"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - syrx-test-network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  syrx-test-network:
+    driver: bridge

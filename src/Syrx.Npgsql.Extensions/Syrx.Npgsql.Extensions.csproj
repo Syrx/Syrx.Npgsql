@@ -2,11 +2,20 @@
 	<PropertyGroup>
 		<Description>This package hosts extension methods to make wiring up support for PostgreSQL databases simpler and easier. </Description>
 		<PackageTags>syrx;data access;dapper;orm;micro-orm;postgresql;npgsql</PackageTags>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="readme.md" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Syrx.Commanders.Databases.Connectors.Npgsql.Extensions\Syrx.Commanders.Databases.Connectors.Npgsql.Extensions.csproj" />
 		<ProjectReference Include="..\Syrx.Npgsql\Syrx.Npgsql.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="DotNet.ReproducibleBuilds" Version="1.2.39" />
 	</ItemGroup>
 
 </Project>

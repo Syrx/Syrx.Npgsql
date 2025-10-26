@@ -12,8 +12,12 @@
                 .AddSimpleConsole()).CreateLogger<NpgsqlFixture>();
 
             _container = new PostgreSqlBuilder()
-                .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(5432))
-                .WithReuse(true)
+                .WithImage("docker-syrx-postgres-test:latest")
+                .WithDatabase("syrx")
+                .WithUsername("syrx_user")
+                .WithPassword("YourStrong!Passw0rd")
+                .WithPortBinding(5432, true)
+                .WithWaitStrategy(Wait.ForUnixContainer().UntilInternalTcpPortIsAvailable(5432))
                 .WithLogger(_logger)
                 .WithStartupCallback((container, token) =>
                 {
@@ -47,18 +51,14 @@ ConnectionString . : {container.GetConnectionString()}
 
         public async Task DisposeAsync()
         {
-            await Task.Run(() => Console.WriteLine("Done"));
+            await _container.DisposeAsync();
         }
 
         public async Task InitializeAsync()
         {
-            // line up
             var connectionString = _container.GetConnectionString();
-            var alias = "Syrx.Sql";
+            var alias = "Syrx.Postgres";
 
-            var provider = Installer.Install(alias, connectionString);
-
-            // call Install() on the base type. 
             Install(() => Installer.Install(alias, connectionString));
             Installer.SetupDatabase(base.ResolveCommander<DatabaseBuilder>());
 
