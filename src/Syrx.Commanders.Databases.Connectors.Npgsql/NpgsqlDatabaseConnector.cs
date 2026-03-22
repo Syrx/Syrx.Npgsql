@@ -1,7 +1,4 @@
-﻿using Npgsql;
-using Syrx.Commanders.Databases.Settings;
-
-namespace Syrx.Commanders.Databases.Connectors.Npgsql
+﻿namespace Syrx.Commanders.Databases.Connectors.Npgsql
 {
     /// <summary>
     /// PostgreSQL implementation of <see cref="IDatabaseConnector"/> for the Syrx framework.

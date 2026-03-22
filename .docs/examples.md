@@ -11,7 +11,7 @@ public void ConfigureServices(IServiceCollection services)
 {
     services.UseSyrx(builder => builder
         .UseNpgsql(npgsql => npgsql
-            .AddConnectionString("Default", "Host=localhost;Database=mydb;Username=postgres;Password=admin")
+            .AddConnectionString("Default", "Host=localhost;Database=mydb;Username=postgres;Password=${DB_PASSWORD}")
             .AddCommand(types => types
                 .ForType<UserRepository>(methods => methods
                     .ForMethod(nameof(UserRepository.GetAllUsersAsync), command => command

@@ -1,6 +1,4 @@
-﻿using System.Transactions;
-
-namespace Syrx.Npgsql.Tests.Integration.DatabaseCommanderTests
+﻿namespace Syrx.Npgsql.Tests.Integration.DatabaseCommanderTests
 {
     [Collection(nameof(NpgsqlFixtureCollection))]
     public class NpgsqlExecute(NpgsqlFixture fixture) : Execute(fixture) 

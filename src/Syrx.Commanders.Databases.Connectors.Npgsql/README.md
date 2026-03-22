@@ -34,6 +34,12 @@ Core PostgreSQL database connector for the Syrx framework.
 - **Parameter Binding**: Safe parameter binding with PostgreSQL types
 - **Performance Optimized**: Leverages Npgsql's performance characteristics
 
+## Security Note
+
+- Do not store secrets directly in source-controlled connection strings.
+- Keep verbose error and parameter logging disabled in non-debug environments.
+- Review the repository security policy in [../../../SECURITY.md](../../../SECURITY.md).
+
 ## Installation
 
 > **Note**: This package is typically installed automatically as a dependency of `Syrx.Npgsql` or `Syrx.Npgsql.Extensions`.
@@ -122,16 +128,16 @@ Supports all Npgsql connection string parameters:
 
 ```csharp
 // Basic connection
-"Host=localhost;Database=myapp;Username=app;Password=secret"
+"Host=localhost;Database=myapp;Username=app;Password=${DB_PASSWORD}"
 
 // With pooling configuration
-"Host=localhost;Database=myapp;Username=app;Password=secret;MinPoolSize=10;MaxPoolSize=200"
+"Host=localhost;Database=myapp;Username=app;Password=${DB_PASSWORD};MinPoolSize=10;MaxPoolSize=200"
 
 // With SSL
-"Host=secure.postgres.com;Database=myapp;Username=app;Password=secret;SslMode=Require"
+"Host=secure.postgres.com;Database=myapp;Username=app;Password=${DB_PASSWORD};SslMode=Require"
 
 // With timeouts
-"Host=localhost;Database=myapp;Username=app;Password=secret;Timeout=30;CommandTimeout=60"
+"Host=localhost;Database=myapp;Username=app;Password=${DB_PASSWORD};Timeout=30;CommandTimeout=60"
 ```
 
 ## Usage Examples
@@ -158,7 +164,7 @@ The connector leverages Npgsql's connection pooling:
 ```csharp
 // Pool configuration via connection string
 var connectionString = 
-    "Host=localhost;Database=myapp;Username=app;Password=secret;" +
+    "Host=localhost;Database=myapp;Username=app;Password=${DB_PASSWORD};" +
     "MinPoolSize=10;" +          // Minimum connections to keep open
     "MaxPoolSize=200;" +         // Maximum total connections
     "ConnectionLifeTime=300;" +  // Connection lifetime in seconds
@@ -290,7 +296,7 @@ public async Task<T> QueryWithErrorHandlingAsync<T>(/* parameters */)
 ```csharp
 // Optimize for high-throughput scenarios
 var highThroughputConnectionString = 
-    "Host=localhost;Database=myapp;Username=app;Password=secret;" +
+    "Host=localhost;Database=myapp;Username=app;Password=${DB_PASSWORD};" +
     "MinPoolSize=20;" +          // Keep more connections warm
     "MaxPoolSize=100;" +         // Limit total connections
     "ConnectionLifeTime=600;" +  // Longer connection lifetime
@@ -298,7 +304,7 @@ var highThroughputConnectionString =
 
 // Optimize for low-latency scenarios  
 var lowLatencyConnectionString =
-    "Host=localhost;Database=myapp;Username=app;Password=secret;" +
+    "Host=localhost;Database=myapp;Username=app;Password=${DB_PASSWORD};" +
     "MinPoolSize=5;" +           // Fewer idle connections
     "MaxPoolSize=50;" +          // Lower maximum
     "ConnectionLifeTime=300;" +  // Shorter lifetime
@@ -335,7 +341,7 @@ public class NpgsqlConnectorTests
     public void Setup()
     {
         _connector = new NpgsqlDatabaseConnector();
-        _testConnectionString = "Host=localhost;Database=test_db;Username=test;Password=test";
+        _testConnectionString = "Host=localhost;Database=test_db;Username=test;Password=${DB_PASSWORD}";
     }
 
     [Test]
@@ -382,8 +388,8 @@ services:
 ```csharp
 // Enable detailed logging
 var connectionString = 
-    "Host=localhost;Database=myapp;Username=app;Password=secret;" +
-    "LogParameters=true;" +      // Log parameter values
+    "Host=localhost;Database=myapp;Username=app;Password=${DB_PASSWORD};" +
+    "LogParameters=false;" +      // Log parameter values
     "LogLevel=Debug";            // Detailed logging
 
 // Monitor pool statistics (requires custom implementation)
@@ -439,7 +445,7 @@ public class PostgreSqlMetrics
 ```csharp
 // SSL/TLS configuration
 var secureConnectionString = 
-    "Host=secure.postgres.com;Database=myapp;Username=app;Password=secret;" +
+    "Host=secure.postgres.com;Database=myapp;Username=app;Password=${DB_PASSWORD};" +
     "SslMode=Require;" +                    // Require SSL
     "TrustServerCertificate=false;" +       // Validate server certificate
     "ClientCertificate=client.crt;" +       // Client certificate path
@@ -472,7 +478,7 @@ public async Task<User> GetUserByEmailAsync(string email)
 
 ## Requirements
 
-- **.NET 8.0** or later
+- **.NET 10.0** or later
 - **PostgreSQL 12** or later (recommended)
 - **Npgsql 8.0** or later
 

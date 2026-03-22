@@ -54,6 +54,12 @@ PostgreSQL data access provider for the Syrx framework.
 - **Async/Await**: Complete async operation support
 - **Multi-mapping**: Complex object composition from query results
 
+## Security Note
+
+- Use environment variables or a secret store for credentials; do not commit plaintext passwords.
+- Keep `Include Error Detail=false` and `LogParameters=false` outside local debugging.
+- Review the repository security policy in [../../SECURITY.md](../../SECURITY.md).
+
 ## Installation
 
 ```bash
@@ -81,7 +87,7 @@ public void ConfigureServices(IServiceCollection services)
 {
     services.UseSyrx(builder => builder
         .UseNpgsql(npgsql => npgsql
-            .AddConnectionString("Default", "Host=localhost;Database=mydb;Username=postgres;Password=admin")
+            .AddConnectionString("Default", "Host=localhost;Database=mydb;Username=postgres;Password=${DB_PASSWORD}")
             .AddCommand(types => types
                 .ForType<UserRepository>(methods => methods
                     .ForMethod(nameof(UserRepository.GetAllUsersAsync), command => command
@@ -214,7 +220,7 @@ public class NetworkLog
 ```csharp
 services.UseSyrx(builder => builder
     .UseNpgsql(npgsql => npgsql
-        .AddConnectionString("Default", "Host=localhost;Database=myapp;Username=app;Password=secret")));
+        .AddConnectionString("Default", "Host=localhost;Database=myapp;Username=app;Password=${DB_PASSWORD}")));
 ```
 
 ### Multiple Databases
@@ -222,8 +228,8 @@ services.UseSyrx(builder => builder
 ```csharp
 services.UseSyrx(builder => builder
     .UseNpgsql(npgsql => npgsql
-        .AddConnectionString("Primary", "Host=prod-primary;Database=myapp;Username=app;Password=secret")
-        .AddConnectionString("ReadReplica", "Host=prod-replica;Database=myapp;Username=reader;Password=secret")
+        .AddConnectionString("Primary", "Host=prod-primary;Database=myapp;Username=app;Password=${DB_PASSWORD}")
+        .AddConnectionString("ReadReplica", "Host=prod-replica;Database=myapp;Username=reader;Password=${DB_PASSWORD}")
         .AddCommand(types => types
             .ForType<ReportRepository>(methods => methods
                 .ForMethod("GetReportData", command => command
@@ -239,7 +245,7 @@ services.UseSyrx(builder => builder
 services.UseSyrx(builder => builder
     .UseNpgsql(npgsql => npgsql
         .AddConnectionString("Optimized", 
-            "Host=localhost;Database=myapp;Username=app;Password=secret;" +
+            "Host=localhost;Database=myapp;Username=app;Password=${DB_PASSWORD};" +
             "MinPoolSize=10;MaxPoolSize=200;ConnectionLifeTime=300;" +
             "Timeout=30;CommandTimeout=60;")));
 ```
@@ -250,7 +256,7 @@ services.UseSyrx(builder => builder
 services.UseSyrx(builder => builder
     .UseNpgsql(npgsql => npgsql
         .AddConnectionString("Secure", 
-            "Host=secure.postgres.com;Database=myapp;Username=app;Password=secret;" +
+            "Host=secure.postgres.com;Database=myapp;Username=app;Password=${DB_PASSWORD};" +
             "SslMode=Require;TrustServerCertificate=false;" +
             "ClientCertificate=client.crt;ClientCertificateKey=client.key;")));
 ```
@@ -366,7 +372,7 @@ public async Task Should_Retrieve_Users_From_PostgreSQL()
     var services = new ServiceCollection();
     services.UseSyrx(builder => builder
         .UseNpgsql(npgsql => npgsql
-            .AddConnectionString("Test", "Host=localhost;Database=testdb;Username=test;Password=test")
+            .AddConnectionString("Test", "Host=localhost;Database=testdb;Username=test;Password=${DB_PASSWORD}")
             .AddCommand(types => types
                 .ForType<UserRepository>(methods => methods
                     .ForMethod(nameof(UserRepository.GetAllUsersAsync), command => command
@@ -427,7 +433,7 @@ public async Task<User> GetUserByIdAsync(int id)
 
 ## Requirements
 
-- **.NET 8.0** or later
+- **.NET 10.0** or later
 - **PostgreSQL 12** or later (recommended)
 - **Npgsql 8.0** or later
 
