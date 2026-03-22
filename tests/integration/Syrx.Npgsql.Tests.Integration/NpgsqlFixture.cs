@@ -3,16 +3,16 @@
     public class NpgsqlFixture : Fixture, IAsyncLifetime
     {
         private readonly PostgreSqlContainer _container;
+        private readonly ILogger<NpgsqlFixture> _logger;
 
         public NpgsqlFixture()
         {
-            var _logger = LoggerFactory.Create(b => b
+            _logger = LoggerFactory.Create(b => b
                 .AddConsole()
                 .AddSystemdConsole()
                 .AddSimpleConsole()).CreateLogger<NpgsqlFixture>();
 
-            _container = new PostgreSqlBuilder()
-                .WithImage("docker-syrx-postgres-test:latest")
+            _container = new PostgreSqlBuilder("docker-syrx-postgres-test:latest")
                 .WithDatabase("syrx")
                 .WithUsername("syrx_user")
                 .WithPassword("YourStrong!Passw0rd")
@@ -21,32 +21,15 @@
                 .WithLogger(_logger)
                 .WithStartupCallback((container, token) =>
                 {
-                    var message = @$"{new string('=', 150)}
-Syrx: {nameof(PostgreSqlContainer)} startup callback. Container details:
-{new string('=', 150)}
-Name ............. : {container.Name}
-Id ............... : {container.Id}
-State ............ : {container.State}
-Health ........... : {container.Health}
-CreatedTime ...... : {container.CreatedTime}
-StartedTime ...... : {container.StartedTime}
-Hostname ......... : {container.Hostname}
-Image.Digest ..... : {container.Image.Digest}
-Image.FullName ... : {container.Image.FullName}
-Image.Registry ... : {container.Image.Registry}
-Image.Repository . : {container.Image.Repository}
-Image.Tag ........ : {container.Image.Tag}
-IpAddress ........ : {container.IpAddress}
-MacAddress ....... : {container.MacAddress}
-ConnectionString . : {container.GetConnectionString()}
-{new string('=', 150)}
-";
-                    container.Logger.LogInformation(message);
+                    container.Logger.LogInformation(
+                        "PostgreSQL test container started: Name={Name}, State={State}, Health={Health}, Image={Image}",
+                        container.Name,
+                        container.State,
+                        container.Health,
+                        container.Image.FullName);
+
                     return Task.CompletedTask;
                 }).Build();
-
-            // start
-            _container.StartAsync().Wait();
         }
 
         public async Task DisposeAsync()
@@ -56,8 +39,12 @@ ConnectionString . : {container.GetConnectionString()}
 
         public async Task InitializeAsync()
         {
+            await _container.StartAsync();
+
             var connectionString = _container.GetConnectionString();
             var alias = "Syrx.Postgres";
+
+            _logger.LogInformation("Initialized PostgreSQL test container connection for alias {Alias}.", alias);
 
             Install(() => Installer.Install(alias, connectionString));
             Installer.SetupDatabase(base.ResolveCommander<DatabaseBuilder>());

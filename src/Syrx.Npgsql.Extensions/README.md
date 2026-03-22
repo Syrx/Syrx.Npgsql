@@ -36,6 +36,12 @@ Dependency injection extensions for Syrx PostgreSQL integration.
 - **Multiple Connections**: Support for multiple named connections
 - **Environment Configuration**: Easy switching between development/production settings
 
+## Security Note
+
+- Use environment variables or a secret store for credentials; do not commit plaintext passwords.
+- Keep `Include Error Detail=false` and `LogParameters=false` outside local debugging.
+- Review the repository security policy in [../../../SECURITY.md](../../../SECURITY.md).
+
 ## Installation
 
 ```bash
@@ -100,9 +106,9 @@ public void ConfigureServices(IServiceCollection services)
 services.UseSyrx(builder => builder
     .UseNpgsql(npgsql => npgsql
         // Multiple connection strings
-        .AddConnectionString("Primary", "Host=prod-primary;Database=app;Username=app;Password=secret")
-        .AddConnectionString("ReadReplica", "Host=prod-replica;Database=app;Username=reader;Password=secret")
-        .AddConnectionString("Analytics", "Host=analytics;Database=warehouse;Username=analyst;Password=secret")
+        .AddConnectionString("Primary", "Host=prod-primary;Database=app;Username=app;Password=${DB_PASSWORD}")
+        .AddConnectionString("ReadReplica", "Host=prod-replica;Database=app;Username=reader;Password=${DB_PASSWORD}")
+        .AddConnectionString("Analytics", "Host=analytics;Database=warehouse;Username=analyst;Password=${DB_PASSWORD}")
         
         .AddCommand(types => types
             .ForType<UserRepository>(methods => methods
@@ -172,7 +178,7 @@ private Action<ITypeSettingsBuilder> LoadCommandConfiguration()
 services.UseSyrx(builder => builder
     .UseNpgsql(npgsql => npgsql
         .AddConnectionString("Default", 
-            "Host=localhost;Database=myapp;Username=app;Password=secret;" +
+            "Host=localhost;Database=myapp;Username=app;Password=${DB_PASSWORD};" +
             "MinPoolSize=10;MaxPoolSize=200;" +                     // Connection pooling
             "ConnectionLifeTime=300;" +                             // Pool management
             "Timeout=30;CommandTimeout=60;" +                       // Timeouts
@@ -212,7 +218,7 @@ services.UseSyrx(builder => builder
 services.UseSyrx(builder => builder
     .UseNpgsql(npgsql => npgsql
         .AddConnectionString("Secure", 
-            "Host=secure.postgres.com;Database=myapp;Username=app;Password=secret;" +
+            "Host=secure.postgres.com;Database=myapp;Username=app;Password=${DB_PASSWORD};" +
             "SslMode=Require;" +                                    // Require SSL
             "TrustServerCertificate=false;" +                       // Validate certificates
             "ClientCertificate=/path/to/client.crt;" +              // Client certificate
@@ -229,14 +235,14 @@ services.UseSyrx(builder => builder
     .UseNpgsql(npgsql => npgsql
         // High-performance connection for OLTP
         .AddConnectionString("OLTP", 
-            "Host=oltp.postgres.com;Database=app;Username=app;Password=secret;" +
+            "Host=oltp.postgres.com;Database=app;Username=app;Password=${DB_PASSWORD};" +
             "MinPoolSize=20;MaxPoolSize=100;" +
             "ConnectionLifeTime=600;" +
             "Timeout=5;CommandTimeout=30")
         
         // Analytics connection for long-running queries
         .AddConnectionString("Analytics", 
-            "Host=analytics.postgres.com;Database=warehouse;Username=analyst;Password=secret;" +
+            "Host=analytics.postgres.com;Database=warehouse;Username=analyst;Password=${DB_PASSWORD};" +
             "MinPoolSize=5;MaxPoolSize=20;" +
             "ConnectionLifeTime=1800;" +
             "Timeout=60;CommandTimeout=300")
@@ -260,7 +266,7 @@ services.UseSyrx(builder => builder
 // appsettings.json
 {
   "ConnectionStrings": {
-    "PostgreSQL": "Host=localhost;Database=myapp;Username=app;Password=secret"
+    "PostgreSQL": "Host=localhost;Database=myapp;Username=app;Password=${DB_PASSWORD}"
   },
   "Syrx": {
     "Commands": {
@@ -411,7 +417,7 @@ public class IntegrationTestBase
 
     private string GetTestConnectionString()
     {
-        return "Host=localhost;Database=test_db;Username=test;Password=test";
+        return "Host=localhost;Database=test_db;Username=test;Password=${DB_PASSWORD}";
     }
 }
 
@@ -471,10 +477,10 @@ services.UseSyrx(builder => builder
 ```csharp
 // Monitor connection pool usage
 .AddConnectionString("Monitored", 
-    "Host=localhost;Database=myapp;Username=app;Password=secret;" +
+    "Host=localhost;Database=myapp;Username=app;Password=${DB_PASSWORD};" +
     "MinPoolSize=10;MaxPoolSize=100;" +
     "ConnectionLifeTime=300;" +
-    "LogParameters=true;LogLevel=Debug")  // Enable detailed logging
+    "LogParameters=false;LogLevel=Debug")  // Enable detailed logging
 ```
 
 ## Related Packages

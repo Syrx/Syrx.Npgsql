@@ -119,7 +119,11 @@ BEGIN
       CALL usp_clear_table(name);
 END $$;";
 
-            public const string Populate = @"INSERT INTO poco(name, value, modified) VALUES (@Name, @Value, @Modified);";
+            public const string Populate = @"INSERT INTO poco(name, value, modified)
+SELECT CONCAT('entry ', entry_id),
+       entry_id * 10,
+       CURRENT_DATE
+FROM generate_series(1, 150) AS entry_id;";
         }
 
         public static class Query

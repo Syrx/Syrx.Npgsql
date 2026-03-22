@@ -18,8 +18,14 @@ Packages included in this repository:
 
 Supported runtimes and requirements:
 
-- .NET 8.0 or later
+- \.NET 10.0 or later
 - PostgreSQL 12 or later (recommended)
 - Npgsql 8.x or later
+
+Security:
+
+- See [../SECURITY.md](../SECURITY.md) for vulnerability reporting and disclosure guidance.
+- Keep connection secrets out of source control and prefer environment variables or a secrets manager.
+- Use `Include Error Detail=false` and `LogParameters=false` in non-debug environments.
 
 For quick start instructions and examples see the `examples.md` and each project's README files.

@@ -5,11 +5,6 @@
 //  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
 //  =============================================================================================================================
 
-using Syrx.Commanders.Databases.Settings;
-using Syrx.Commanders.Databases.Settings.Extensions;
-using Syrx.Commanders.Databases.Tests.Extensions;
-using static Xunit.Assert;
-
 namespace Syrx.Commanders.Databases.Connectors.Npgsql.Tests.Unit.NpgsqlDatabaseConnectorTests
 {
     public class Constructor

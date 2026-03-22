@@ -6,6 +6,7 @@ This project provides Syrx support for Postgres. The overall experience of using
 
 - [Installation](#installation)
 - [Extensions](#extensions)
+- [Security](#security)
 - [Credits](#credits) 
 
 
@@ -46,6 +47,12 @@ public static IServiceCollection Install(this IServiceCollection services)
         );
 }
 ```
+
+## Security
+
+- Review [SECURITY.md](SECURITY.md) before reporting vulnerabilities.
+- Keep secrets in environment variables or a secure secret store.
+- In non-debug environments, use `Include Error Detail=false` and `LogParameters=false`.
 
 ## Credits
 Syrx is inspired by and build on top of [Dapper](https://github.com/DapperLib/Dapper).    

@@ -34,6 +34,12 @@ Dependency injection extensions for Syrx PostgreSQL database connectors.
 - **Builder Pattern**: Fluent configuration APIs
 - **Extensibility**: Support for custom connector configurations
 
+## Security Note
+
+- Use environment variables or secret stores for connection details.
+- Keep sensitive diagnostic toggles disabled outside local debugging.
+- Review the repository security policy in [../../../SECURITY.md](../../../SECURITY.md).
+
 ## Installation
 
 > **Note**: This package is typically installed automatically as a dependency of `Syrx.Npgsql.Extensions`.
@@ -120,8 +126,8 @@ services.UseSyrx(builder => builder
 ```csharp
 services.UseSyrx(builder => builder
     .UseNpgsql(npgsql => npgsql
-        .AddConnectionString("Primary", "Host=localhost;Database=mydb;Username=admin;Password=adminpass")
-        .AddConnectionString("ReadOnly", "Host=readonly;Database=mydb;Username=reader;Password=readpass")
+        .AddConnectionString("Primary", "Host=localhost;Database=mydb;Username=admin;Password=${DB_PASSWORD}")
+        .AddConnectionString("ReadOnly", "Host=readonly;Database=mydb;Username=reader;Password=${DB_PASSWORD}")
         .AddCommand(types => types
             .ForType<UserRepository>(methods => methods
                 .ForMethod("GetUsers", command => command
@@ -180,7 +186,7 @@ services.UseSyrx(builder => builder
 services.UseSyrx(builder => builder
     .UseNpgsql(npgsql => npgsql
         .AddConnectionString("Pooled", 
-            "Host=localhost;Database=mydb;Username=user;Password=pass;" +
+            "Host=localhost;Database=mydb;Username=user;Password=${DB_PASSWORD};" +
             "MinPoolSize=10;MaxPoolSize=200;ConnectionLifeTime=300;")
         .AddCommand(/* commands */)));
 ```
@@ -204,7 +210,7 @@ services.UseSyrx(builder => builder
 services.UseSyrx(builder => builder
     .UseNpgsql(npgsql => npgsql
         .AddConnectionString("Secure", 
-            "Host=prod.postgres.com;Database=mydb;Username=user;Password=pass;" +
+            "Host=prod.postgres.com;Database=mydb;Username=user;Password=${DB_PASSWORD};" +
             "SslMode=Require;TrustServerCertificate=false;" +
             "ClientCertificate=client.crt;ClientCertificateKey=client.key;")
         .AddCommand(/* commands */)));
@@ -263,7 +269,7 @@ var connector = provider.GetService<IDatabaseConnector>();
 services.UseSyrx(builder => builder
     .UseNpgsql(npgsql => npgsql
         .AddConnectionString("Optimized", 
-            "Host=localhost;Database=mydb;Username=user;Password=pass;" +
+            "Host=localhost;Database=mydb;Username=user;Password=${DB_PASSWORD};" +
             "MinPoolSize=5;MaxPoolSize=100;" +
             "ConnectionLifeTime=300;ConnectionTimeout=30;" +
             "CommandTimeout=60;Pooling=true;KeepAlive=30;")
@@ -283,7 +289,7 @@ services.UseSyrx(builder => builder
 services.UseSyrx(builder => builder
     .UseNpgsql(npgsql => npgsql
         .AddConnectionString("OLTP", 
-            "Host=oltp.postgres.com;Database=app;Username=app;Password=secret;" +
+            "Host=oltp.postgres.com;Database=app;Username=app;Password=${DB_PASSWORD};" +
             "MinPoolSize=20;MaxPoolSize=100;" +
             "ConnectionLifeTime=600;" +
             "Timeout=5;CommandTimeout=30;" +
@@ -296,7 +302,7 @@ services.UseSyrx(builder => builder
 services.UseSyrx(builder => builder
     .UseNpgsql(npgsql => npgsql
         .AddConnectionString("Analytics", 
-            "Host=analytics.postgres.com;Database=warehouse;Username=analyst;Password=secret;" +
+            "Host=analytics.postgres.com;Database=warehouse;Username=analyst;Password=${DB_PASSWORD};" +
             "MinPoolSize=5;MaxPoolSize=20;" +
             "ConnectionLifeTime=1800;" +
             "Timeout=60;CommandTimeout=300;")  // Long timeouts for complex queries
@@ -403,7 +409,7 @@ public static class DockerPostgreSqlExtensions
     public static SyrxBuilder UseDockerPostgreSql(this SyrxBuilder builder)
     {
         var connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONNECTION") ??
-            "Host=postgres;Database=app;Username=postgres;Password=postgres";
+            "Host=postgres;Database=app;Username=postgres;Password=${DB_PASSWORD}";
             
         return builder.UseNpgsql(npgsql => npgsql
             .AddConnectionString("Docker", connectionString)

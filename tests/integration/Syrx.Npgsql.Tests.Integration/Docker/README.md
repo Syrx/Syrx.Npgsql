@@ -62,8 +62,10 @@ The PostgreSQL container is configured with the following connection details:
 - **Port**: 5432
 - **Database**: syrx
 - **Username**: syrx_user
-- **Password**: YourStrong!Passw0rd
-- **Connection String**: `Host=localhost;Port=5432;Database=syrx;Username=syrx_user;Password=YourStrong!Passw0rd;Include Error Detail=true;`
+- **Password**: `${DB_PASSWORD}`
+- **Connection String**: `Host=localhost;Port=5432;Database=syrx;Username=syrx_user;Password=${DB_PASSWORD};Include Error Detail=false;LogParameters=false;`
+
+Use a local environment variable for `DB_PASSWORD` when running integration tests to avoid hardcoding secrets.
 
 ## Database Schema
 
@@ -178,7 +180,7 @@ The migration provides both old and new test classes:
 
 This setup is compatible with:
 - PostgreSQL 16 (Alpine Linux)
-- .NET 8.0+
+- \.NET 10.0+
 - Docker Engine 20.10+
 - Docker Compose 2.0+
 - Windows, macOS, and Linux development environments

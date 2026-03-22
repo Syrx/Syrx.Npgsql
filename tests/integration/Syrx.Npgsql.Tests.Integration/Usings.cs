@@ -1,6 +1,7 @@
 global using DotNet.Testcontainers.Builders;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
+global using System.Transactions;
 global using Syrx.Commanders.Databases.Connectors.Npgsql.Extensions;
 global using Syrx.Commanders.Databases.Settings.Extensions;
 global using Syrx.Commanders.Databases.Tests.Integration;
