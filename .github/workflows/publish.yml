@@ -86,7 +86,7 @@ jobs:
       uses: docker/setup-buildx-action@v3
       
     - name: Build custom PostgreSQL Docker image for tests
-      uses: docker/build-push-action@v6
+      uses: docker/build-push-action@v7
       with:
         context: tests/integration/Syrx.Npgsql.Tests.Integration/Docker
         push: false
